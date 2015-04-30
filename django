@@ -1,0 +1,17 @@
+CONFIG = {
+    'mode': 'wsgi',
+    'environment': {
+        'PYTHONPATH': '/path/to/custom/python/packages',
+    },
+    'working_dir': '/home/pavel/ask_Pivkin/ask_Pivkin',
+    #'user': 'www-data',
+    #'group': 'www-data',
+    'args': (
+	'--access-logfile=-',
+        '--bind=127.0.0.1:8081',
+        '--workers=4',
+        #'--worker-class=egg:gunicorn#sync',
+        #'--timeout=30',
+        'wsgi:application',
+    ),
+}
