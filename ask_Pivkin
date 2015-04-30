@@ -1,0 +1,29 @@
+upstream gunicorn{
+	server 127.0.0.1:8081;
+}
+server {
+	listen 127.0.0.1:8080;
+	server_name localhost:8080;
+	root /home/pavel/ask_Pivkin/static/;
+	index index.html;
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+
+	location / {
+		proxy_pass         http://gunicorn;
+		proxy_set_header   Host      $host;
+		proxy_set_header   X-Real-IP $remote_addr;
+	}
+
+	location ^~/uploads/ {
+		root /home/pavel/ask_Pivkin/;
+		expires 3d;
+	}
+
+	location ~*\.(html|css|js|ttf|woff)$ {
+		root /home/pavel/ask_Pivkin/static/;
+		expires 1h;			
+	}
+}
+
+
